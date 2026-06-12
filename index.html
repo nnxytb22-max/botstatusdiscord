@@ -3,19 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Status Bot Discord</title>
+
+<title>N1NOX Bot Status</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Segoe UI,sans-serif;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
 min-height:100vh;
-background:linear-gradient(-45deg,#5865F2,#404EED,#6D28D9,#3B82F6);
+background:linear-gradient(-45deg,#0f0f0f,#161616,#1f1f1f,#111111);
 background-size:400% 400%;
 animation:bg 12s ease infinite;
 display:flex;
@@ -34,12 +36,13 @@ color:white;
 .card{
 width:100%;
 max-width:420px;
-background:rgba(255,255,255,.12);
+background:rgba(255,255,255,.08);
 backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.1);
 border-radius:25px;
 padding:25px;
 text-align:center;
-box-shadow:0 15px 40px rgba(0,0,0,.3);
+box-shadow:0 15px 40px rgba(0,0,0,.5);
 animation:float 3s ease-in-out infinite;
 }
 
@@ -50,246 +53,104 @@ transform:translateY(-8px);
 }
 
 .logo{
-font-size:70px;
+width:120px;
+height:120px;
+margin:auto;
+border-radius:50%;
+overflow:hidden;
+border:3px solid rgba(255,255,255,.15);
+box-shadow:0 0 25px rgba(255,255,255,.15);
+}
+
+.logo img{
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
 h1{
-margin-top:10px;
+margin-top:15px;
+font-size:32px;
+letter-spacing:2px;
 }
 
 .status{
 margin-top:20px;
 padding:18px;
 border-radius:15px;
-background:rgba(255,255,255,.1);
+background:rgba(34,197,94,.15);
+border:1px solid rgba(34,197,94,.3);
 font-size:24px;
 font-weight:bold;
+}
+
+.description{
+margin-top:15px;
+padding:15px;
+border-radius:15px;
+background:rgba(255,255,255,.05);
+line-height:1.7;
+font-size:15px;
+color:#d1d5db;
 }
 
 .btn{
 width:100%;
 border:none;
 padding:14px;
-margin-top:12px;
+margin-top:18px;
 border-radius:12px;
 font-size:16px;
 font-weight:bold;
 cursor:pointer;
 color:white;
+background:#2563eb;
+transition:.3s;
 }
 
-.login{
-background:#111827;
+.btn:hover{
+transform:scale(1.03);
+background:#3b82f6;
 }
 
-.discord{
-background:#5865F2;
+.footer{
+margin-top:15px;
+font-size:13px;
+color:#9ca3af;
 }
 
-.info{
-background:#8B5CF6;
-}
-
-.online{
-background:#22c55e;
-}
-
-.offline{
-background:#ef4444;
-}
-
-.repair{
-background:#f59e0b;
-}
-
-#adminPanel{
-display:none;
-}
-
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.6);
-justify-content:center;
-align-items:center;
-padding:20px;
-}
-
-.modal-content{
-background:#1F2937;
-padding:20px;
-border-radius:20px;
-width:100%;
-max-width:350px;
-text-align:center;
-}
-
-.modal-content input{
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-margin-top:10px;
-}
-
-.modal-content button{
-margin-top:10px;
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#22c55e;
-color:white;
-font-weight:bold;
-}
-
-.close{
-background:#ef4444 !important;
-}
 </style>
 </head>
 <body>
 
 <div class="card">
 
-<div class="logo">🤖</div>
-
-<h1>Status Bot Discord</h1>
-
-<div class="status" id="status">
-🟢 EN LIGNE
+<div class="logo">
+<img src="df3e89bb5ae9a3595a3e99fcba82998f.jpg" alt="MR.X Logo">
 </div>
 
-<button class="btn login" onclick="openLogin()">
-🔐 Se connecter (ADMIN)
-</button>
+<h1>N1NOX BOT</h1>
 
-<div id="adminPanel">
-
-<button class="btn online"
-onclick="setStatus('🟢 EN LIGNE')">
-🟢 En ligne
-</button>
-
-<button class="btn offline"
-onclick="setStatus('🔴 HORS LIGNE')">
-🔴 Hors ligne
-</button>
-
-<button class="btn repair"
-onclick="setStatus('🟠 EN RÉPARATION')">
-🟠 Réparation
-</button>
-
+<div class="status">
+🛠️ EN Amélioration
 </div>
 
-<button class="btn discord"
-onclick="window.open('https://discord.gg/TON-LIEN')">
-💬 Rejoindre Discord
-</button>
-
-<button class="btn info"
-onclick="showInfo()">
-ℹ️ Informations
-</button>
-
+<div class="description">
+🤖 Bot Discord multifonction conçu pour la modération,
+les tickets, la sécurité, l'anti-spam et de nombreuses
+commandes utiles pour gérer votre serveur efficacement.
 </div>
 
-<div class="modal" id="loginModal">
-<div class="modal-content">
-
-<h2>Connexion Admin</h2>
-
-<input
-type="password"
-id="password"
-placeholder="Mot de passe">
-
-<button onclick="login()">
-Connexion
+<button class="btn"
+onclick="window.open('https://discord.gg/TON_LIEN_DISCORD')">
+💬 Rejoindre le serveur Discord
 </button>
 
-<button class="close"
-onclick="closeLogin()">
-Fermer
-</button>
-
-</div>
+<div class="footer">
+Version 1.0 • Développé par MR.X
 </div>
 
-<script>
-
-const ADMIN_PASSWORD = "123456";
-
-function openLogin(){
-document.getElementById("loginModal").style.display="flex";
-}
-
-function closeLogin(){
-document.getElementById("loginModal").style.display="none";
-}
-
-function login(){
-
-const pwd =
-document.getElementById("password").value;
-
-if(pwd===ADMIN_PASSWORD){
-
-document.getElementById("adminPanel")
-.style.display="block";
-
-closeLogin();
-
-alert("Connexion réussie");
-
-}else{
-
-alert("Mot de passe incorrect");
-
-}
-}
-
-function setStatus(status){
-
-document.getElementById("status").innerText =
-status;
-
-localStorage.setItem("bot_status",status);
-
-}
-
-const saved =
-localStorage.getItem("bot_status");
-
-if(saved){
-document.getElementById("status").innerText =
-saved;
-}
-
-function showInfo(){
-
-alert(`🤖 N1NOX Bot
-
-━━━━━━━━━━━━━━
-
-📊 Uptime : 99.9%
-⚡ Réponse moyenne : 42 ms
-🛡️ Protection anti-spam
-👮 Modération automatique
-🎵 Système musical intégré
-🎫 Tickets support
-📈 Statistiques avancées
-
-Version : 1.02.1
-Développé par N1NOX
-
-━━━━━━━━━━━━━━`);
-
-}
-
-</script>
+</div>
 
 </body>
 </html>
