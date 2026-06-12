@@ -2,10 +2,9 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>N1NOX • Panel Bot</title>
+    <title>N1NOX • Panel Bot (Global Status)</title>
 
     <style>
-        /* ======== FOND ANIMÉ NÉON ======== */
         body {
             margin: 0;
             padding: 0;
@@ -23,7 +22,6 @@
             100% { background-position: 50% 0%; }
         }
 
-        /* ======== MENU ======== */
         .navbar {
             background: rgba(0,0,0,0.6);
             padding: 12px;
@@ -49,7 +47,6 @@
             text-shadow: 0 0 10px #ff0055;
         }
 
-        /* ======== SECTIONS ======== */
         .section {
             padding: 60px 20px;
             max-width: 700px;
@@ -63,7 +60,6 @@
             margin-bottom: 20px;
         }
 
-        /* ======== BOX ======== */
         .box {
             margin: 20px auto;
             width: 90%;
@@ -74,7 +70,6 @@
             backdrop-filter: blur(10px);
         }
 
-        /* ======== BOUTONS ADMIN ======== */
         .btn {
             padding: 12px;
             margin: 8px;
@@ -94,12 +89,6 @@
         .repair { background: #ffab00; box-shadow: 0 0 15px #ffab00; }
         .service { background: #6a1b9a; box-shadow: 0 0 15px #6a1b9a; }
 
-        .btn:hover {
-            transform: scale(1.05);
-            opacity: 0.9;
-        }
-
-        /* ======== LISTES ======== */
         .news-item, .cmd {
             font-size: 18px;
             margin: 10px 0;
@@ -111,7 +100,6 @@
 </head>
 <body>
 
-    <!-- MENU -->
     <div class="navbar">
         <a href="#status">🛰️ Status</a>
         <a href="#news">📰 Nouveautés</a>
@@ -128,10 +116,10 @@
                 Chargement...
             </div>
 
-            <button id="btn1" class="btn online" onclick="setStatus('🟢 En ligne')">🟢 En ligne</button>
-            <button id="btn2" class="btn offline" onclick="setStatus('🔴 Hors ligne')">🔴 Hors ligne</button>
-            <button id="btn3" class="btn repair" onclick="setStatus('🛠️ En réparation')">🛠️ En réparation</button>
-            <button id="btn4" class="btn service" onclick="setStatus('🚫 Hors service')">🚫 Hors service</button>
+            <button id="btn1" class="btn online" onclick="updateStatus('🟢 En ligne')">🟢 En ligne</button>
+            <button id="btn2" class="btn offline" onclick="updateStatus('🔴 Hors ligne')">🔴 Hors ligne</button>
+            <button id="btn3" class="btn repair" onclick="updateStatus('🛠️ En réparation')">🛠️ En réparation</button>
+            <button id="btn4" class="btn service" onclick="updateStatus('🚫 Hors service')">🚫 Hors service</button>
         </div>
 
         <div onclick="adminLogin()" style="cursor:pointer;opacity:0.7;margin-top:10px;">
@@ -144,10 +132,9 @@
         <div class="title">📰 Nouveautés</div>
 
         <div class="box">
-            <div class="news-item">✨ Nouveau design néon ultra stylé</div>
-            <div class="news-item">🔐 Système admin caché + mot de passe</div>
-            <div class="news-item">📱 Optimisé pour téléphone</div>
-            <div class="news-item">💾 Status sauvegardé localement</div>
+            <div class="news-item">✨ Status global pour tout le monde</div>
+            <div class="news-item">🔐 Accès admin avec mot de passe + token</div>
+            <div class="news-item">🎨 Design néon stylé</div>
         </div>
     </div>
 
@@ -191,36 +178,79 @@
     </div>
 
 <script>
-/* ======== ADMIN ======== */
+/* ========= CONFIG ========= */
 const ADMIN_PASSWORD = "N1NOX123"; // change ici
+const REPO = "nnxytb22-max/nnxytb22-max.github.io"; // change si ton repo a un autre nom
+const FILE = "status.json";
 
+let GITHUB_TOKEN = null; // sera rempli après le login admin
+
+/* ========= LECTURE DU STATUS GLOBAL ========= */
+async function loadStatus() {
+    try {
+        const res = await fetch("status.json?cache=" + Date.now());
+        const data = await res.json();
+        document.getElementById("statusText").innerHTML = data.status;
+    } catch (e) {
+        document.getElementById("statusText").innerHTML = "Erreur de chargement du statut";
+    }
+}
+
+/* ========= MISE À JOUR DU STATUS GLOBAL ========= */
+async function updateStatus(text) {
+    if (!GITHUB_TOKEN) {
+        alert("⚠️ Tu dois d’abord te connecter en admin (mot de passe + token).");
+        return;
+    }
+
+    const content = btoa(JSON.stringify({ status: text }, null, 4));
+
+    const shaRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`);
+    const shaData = await shaRes.json();
+
+    await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
+        method: "PUT",
+        headers: {
+            "Authorization": `token ${GITHUB_TOKEN}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message: "Update status",
+            content: content,
+            sha: shaData.sha
+        })
+    });
+
+    document.getElementById("statusText").innerHTML = text;
+    alert("✅ Statut mis à jour pour tout le monde !");
+}
+
+/* ========= LOGIN ADMIN (MDP + TOKEN) ========= */
 function adminLogin() {
     let pass = prompt("Mot de passe admin :");
-    if (pass === ADMIN_PASSWORD) {
-        document.getElementById("btn1").style.display = "block";
-        document.getElementById("btn2").style.display = "block";
-        document.getElementById("btn3").style.display = "block";
-        document.getElementById("btn4").style.display = "block";
-        alert("Accès admin activé.");
-    } else {
+    if (pass !== ADMIN_PASSWORD) {
         alert("Mot de passe incorrect.");
+        return;
     }
+
+    let token = prompt("Entre ton token GitHub (ne le partage JAMAIS) :");
+    if (!token) {
+        alert("Token manquant.");
+        return;
+    }
+
+    GITHUB_TOKEN = token; // on garde le token en mémoire (pas dans le code)
+
+    document.getElementById("btn1").style.display = "block";
+    document.getElementById("btn2").style.display = "block";
+    document.getElementById("btn3").style.display = "block";
+    document.getElementById("btn4").style.display = "block";
+
+    alert("✅ Accès admin activé. Tu peux maintenant changer le statut global.");
 }
 
-/* ======== STATUS ======== */
-function setStatus(text) {
-    document.getElementById("statusText").innerHTML = text;
-    localStorage.setItem("botStatus", text);
-}
-
-window.onload = () => {
-    let saved = localStorage.getItem("botStatus");
-    if (saved) {
-        document.getElementById("statusText").innerHTML = saved;
-    } else {
-        document.getElementById("statusText").innerHTML = "Aucun statut";
-    }
-};
+/* ========= AU CHARGEMENT ========= */
+loadStatus();
 </script>
 
 </body>
