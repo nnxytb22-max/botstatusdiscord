@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>N1NOX • Panel Bot</title>
+
+    <style>
+        /* ======== FOND ANIMÉ NÉON ======== */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: radial-gradient(circle at top, #ff0055, #0a0a0a 60%);
+            background-size: 200% 200%;
+            animation: neonBG 8s ease infinite;
+            color: white;
+            text-align: center;
+        }
+
+        @keyframes neonBG {
+            0% { background-position: 50% 0%; }
+            50% { background-position: 50% 100%; }
+            100% { background-position: 50% 0%; }
+        }
+
+        /* ======== MENU ======== */
+        .navbar {
+            background: rgba(0,0,0,0.6);
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            box-shadow: 0 0 20px #ff0055;
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(6px);
+            z-index: 10;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 17px;
+            transition: 0.2s;
+        }
+
+        .navbar a:hover {
+            color: #ff0055;
+            text-shadow: 0 0 10px #ff0055;
+        }
+
+        /* ======== SECTIONS ======== */
+        .section {
+            padding: 60px 20px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .title {
+            font-size: 38px;
+            font-weight: bold;
+            text-shadow: 0 0 15px #ff0055;
+            margin-bottom: 20px;
+        }
+
+        /* ======== BOX ======== */
+        .box {
+            margin: 20px auto;
+            width: 90%;
+            padding: 25px;
+            border-radius: 18px;
+            background: rgba(0,0,0,0.6);
+            box-shadow: 0 0 25px #ff0055;
+            backdrop-filter: blur(10px);
+        }
+
+        /* ======== BOUTONS ADMIN ======== */
+        .btn {
+            padding: 12px;
+            margin: 8px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            color: white;
+            transition: 0.2s;
+            display: none;
+            width: 90%;
+            max-width: 300px;
+        }
+
+        .online { background: #00c853; box-shadow: 0 0 15px #00c853; }
+        .offline { background: #d50000; box-shadow: 0 0 15px #d50000; }
+        .repair { background: #ffab00; box-shadow: 0 0 15px #ffab00; }
+        .service { background: #6a1b9a; box-shadow: 0 0 15px #6a1b9a; }
+
+        .btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* ======== LISTES ======== */
+        .news-item, .cmd {
+            font-size: 18px;
+            margin: 10px 0;
+            text-align: left;
+            padding-left: 10px;
+            border-left: 3px solid #ff0055;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENU -->
+    <div class="navbar">
+        <a href="#status">🛰️ Status</a>
+        <a href="#news">📰 Nouveautés</a>
+        <a href="#apropos">ℹ️ À propos</a>
+        <a href="#commandes">⚙️ Commandes</a>
+    </div>
+
+    <!-- STATUS -->
+    <div class="section" id="status">
+        <div class="title">🛰️ Status du Bot N1NOX</div>
+
+        <div class="box">
+            <div id="statusText" style="font-size:32px;font-weight:bold;margin-bottom:25px;">
+                Chargement...
+            </div>
+
+            <button id="btn1" class="btn online" onclick="setStatus('🟢 En ligne')">🟢 En ligne</button>
+            <button id="btn2" class="btn offline" onclick="setStatus('🔴 Hors ligne')">🔴 Hors ligne</button>
+            <button id="btn3" class="btn repair" onclick="setStatus('🛠️ En réparation')">🛠️ En réparation</button>
+            <button id="btn4" class="btn service" onclick="setStatus('🚫 Hors service')">🚫 Hors service</button>
+        </div>
+
+        <div onclick="adminLogin()" style="cursor:pointer;opacity:0.7;margin-top:10px;">
+            🔐 Accès administrateur
+        </div>
+    </div>
+
+    <!-- NOUVEAUTÉS -->
+    <div class="section" id="news">
+        <div class="title">📰 Nouveautés</div>
+
+        <div class="box">
+            <div class="news-item">✨ Nouveau design néon ultra stylé</div>
+            <div class="news-item">🔐 Système admin caché + mot de passe</div>
+            <div class="news-item">📱 Optimisé pour téléphone</div>
+            <div class="news-item">💾 Status sauvegardé localement</div>
+        </div>
+    </div>
+
+    <!-- À PROPOS -->
+    <div class="section" id="apropos">
+        <div class="title">ℹ️ À propos du Bot</div>
+
+        <div class="box">
+            <p style="font-size:20px;">
+                🤖 Le bot <b>N1NOX</b> est un bot Discord complet :
+            </p>
+
+            <p>• 🎧 Musique HD</p>
+            <p>• 🧠 IA intégrée</p>
+            <p>• 💸 Économie + banque</p>
+            <p>• 🛒 Boutique stylée</p>
+            <p>• 🔊 Auto-vocal</p>
+            <p>• 📢 Radio 24/7</p>
+            <p>• 🛠️ Modération avancée</p>
+        </div>
+    </div>
+
+    <!-- COMMANDES -->
+    <div class="section" id="commandes">
+        <div class="title">⚙️ Commandes du Bot</div>
+
+        <div class="box">
+            <p class="cmd">💬 <b>/ia</b> — Pose une question à l’IA</p>
+            <p class="cmd">💸 <b>/money</b> — Voir ton argent</p>
+            <p class="cmd">🏦 <b>/banque</b> — Gérer ton compte bancaire</p>
+            <p class="cmd">🛒 <b>/shop</b> — Voir la boutique</p>
+            <p class="cmd">🎧 <b>/play</b> — Jouer une musique</p>
+            <p class="cmd">🔊 <b>/autovocal</b> — Activer l’auto-vocal</p>
+            <p class="cmd">📢 <b>/radio</b> — Lancer la radio</p>
+            <p class="cmd">🧾 <b>/help</b> — Voir toutes les commandes</p>
+            <p class="cmd">📊 <b>/stats</b> — Voir les stats du bot</p>
+            <p class="cmd">🖼️ <b>/avatar</b> — Voir un avatar</p>
+            <p class="cmd">🧑‍💼 <b>/userinfo</b> — Infos d’un membre</p>
+            <p class="cmd">🌐 <b>/serverinfo</b> — Infos du serveur</p>
+        </div>
+    </div>
+
+<script>
+/* ======== ADMIN ======== */
+const ADMIN_PASSWORD = "N1NOX123"; // change ici
+
+function adminLogin() {
+    let pass = prompt("Mot de passe admin :");
+    if (pass === ADMIN_PASSWORD) {
+        document.getElementById("btn1").style.display = "block";
+        document.getElementById("btn2").style.display = "block";
+        document.getElementById("btn3").style.display = "block";
+        document.getElementById("btn4").style.display = "block";
+        alert("Accès admin activé.");
+    } else {
+        alert("Mot de passe incorrect.");
+    }
+}
+
+/* ======== STATUS ======== */
+function setStatus(text) {
+    document.getElementById("statusText").innerHTML = text;
+    localStorage.setItem("botStatus", text);
+}
+
+window.onload = () => {
+    let saved = localStorage.getItem("botStatus");
+    if (saved) {
+        document.getElementById("statusText").innerHTML = saved;
+    } else {
+        document.getElementById("statusText").innerHTML = "Aucun statut";
+    }
+};
+</script>
+
+</body>
+</html>
