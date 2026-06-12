@@ -127,63 +127,13 @@
         </div>
     </div>
 
-    <!-- NOUVEAUTÉS -->
-    <div class="section" id="news">
-        <div class="title">📰 Nouveautés</div>
-
-        <div class="box">
-            <div class="news-item">✨ Status global pour tout le monde</div>
-            <div class="news-item">🔐 Accès admin avec mot de passe + token</div>
-            <div class="news-item">🎨 Design néon stylé</div>
-        </div>
-    </div>
-
-    <!-- À PROPOS -->
-    <div class="section" id="apropos">
-        <div class="title">ℹ️ À propos du Bot</div>
-
-        <div class="box">
-            <p style="font-size:20px;">
-                🤖 Le bot <b>N1NOX</b> est un bot Discord complet :
-            </p>
-
-            <p>• 🎧 Musique HD</p>
-            <p>• 🧠 IA intégrée</p>
-            <p>• 💸 Économie + banque</p>
-            <p>• 🛒 Boutique stylée</p>
-            <p>• 🔊 Auto-vocal</p>
-            <p>• 📢 Radio 24/7</p>
-            <p>• 🛠️ Modération avancée</p>
-        </div>
-    </div>
-
-    <!-- COMMANDES -->
-    <div class="section" id="commandes">
-        <div class="title">⚙️ Commandes du Bot</div>
-
-        <div class="box">
-            <p class="cmd">💬 <b>/ia</b> — Pose une question à l’IA</p>
-            <p class="cmd">💸 <b>/money</b> — Voir ton argent</p>
-            <p class="cmd">🏦 <b>/banque</b> — Gérer ton compte bancaire</p>
-            <p class="cmd">🛒 <b>/shop</b> — Voir la boutique</p>
-            <p class="cmd">🎧 <b>/play</b> — Jouer une musique</p>
-            <p class="cmd">🔊 <b>/autovocal</b> — Activer l’auto-vocal</p>
-            <p class="cmd">📢 <b>/radio</b> — Lancer la radio</p>
-            <p class="cmd">🧾 <b>/help</b> — Voir toutes les commandes</p>
-            <p class="cmd">📊 <b>/stats</b> — Voir les stats du bot</p>
-            <p class="cmd">🖼️ <b>/avatar</b> — Voir un avatar</p>
-            <p class="cmd">🧑‍💼 <b>/userinfo</b> — Infos d’un membre</p>
-            <p class="cmd">🌐 <b>/serverinfo</b> — Infos du serveur</p>
-        </div>
-    </div>
-
 <script>
 /* ========= CONFIG ========= */
-const ADMIN_PASSWORD = "N1NOX123"; // change ici
-const REPO = "nnxytb22-max/nnxytb22-max.github.io"; // change si ton repo a un autre nom
+const ADMIN_PASSWORD = "N1NOX123"; 
+const REPO = "nnxytb22-max/botstatusdiscord";  // TON REPO EXACT
 const FILE = "status.json";
 
-let GITHUB_TOKEN = null; // sera rempli après le login admin
+let GITHUB_TOKEN = null;
 
 /* ========= LECTURE DU STATUS GLOBAL ========= */
 async function loadStatus() {
@@ -199,7 +149,7 @@ async function loadStatus() {
 /* ========= MISE À JOUR DU STATUS GLOBAL ========= */
 async function updateStatus(text) {
     if (!GITHUB_TOKEN) {
-        alert("⚠️ Tu dois d’abord te connecter en admin (mot de passe + token).");
+        alert("⚠️ Connecte-toi en admin d'abord !");
         return;
     }
 
@@ -225,28 +175,28 @@ async function updateStatus(text) {
     alert("✅ Statut mis à jour pour tout le monde !");
 }
 
-/* ========= LOGIN ADMIN (MDP + TOKEN) ========= */
+/* ========= LOGIN ADMIN ========= */
 function adminLogin() {
     let pass = prompt("Mot de passe admin :");
     if (pass !== ADMIN_PASSWORD) {
-        alert("Mot de passe incorrect.");
+        alert("❌ Mauvais mot de passe");
         return;
     }
 
-    let token = prompt("Entre ton token GitHub (ne le partage JAMAIS) :");
+    let token = prompt("Entre ton token GitHub :");
     if (!token) {
-        alert("Token manquant.");
+        alert("❌ Token manquant");
         return;
     }
 
-    GITHUB_TOKEN = token; // on garde le token en mémoire (pas dans le code)
+    GITHUB_TOKEN = token;
 
     document.getElementById("btn1").style.display = "block";
     document.getElementById("btn2").style.display = "block";
     document.getElementById("btn3").style.display = "block";
     document.getElementById("btn4").style.display = "block";
 
-    alert("✅ Accès admin activé. Tu peux maintenant changer le statut global.");
+    alert("🔓 Accès admin activé !");
 }
 
 /* ========= AU CHARGEMENT ========= */
