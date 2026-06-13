@@ -7,14 +7,14 @@
 
 <style>
 :root{
-    --bg:#0a0a0a;
+    --bg:#050509;
     --card:rgba(255,255,255,0.06);
-    --text:white;
+    --text:#ffffff;
 }
 .light{
-    --bg:#f2f2f2;
+    --bg:#f2f2f7;
     --card:rgba(0,0,0,0.06);
-    --text:black;
+    --text:#000000;
 }
 
 /* BACKGROUND */
@@ -22,11 +22,11 @@ body{
     margin:0;
     padding:0;
     background:var(--bg);
-    font-family:'Segoe UI', sans-serif;
+    font-family:'Segoe UI', system-ui, sans-serif;
     color:var(--text);
     height:100vh;
     overflow:hidden;
-    transition:0.3s;
+    transition:background 0.3s, color 0.3s;
 }
 
 /* Glow Discord */
@@ -34,11 +34,11 @@ body{
     position:fixed;
     top:-200px;
     right:-200px;
-    width:500px;
-    height:500px;
+    width:520px;
+    height:520px;
     background:#5865F2;
-    filter:blur(200px);
-    opacity:0.25;
+    filter:blur(220px);
+    opacity:0.35;
     z-index:-1;
 }
 
@@ -53,7 +53,7 @@ body{
     border-radius:15px;
     border:1px solid rgba(255,255,255,0.15);
     backdrop-filter:blur(10px);
-    font-size:20px;
+    font-size:18px;
     font-weight:600;
     box-shadow:0 0 20px rgba(88,101,242,0.4);
 }
@@ -72,7 +72,7 @@ body{
     text-align:center;
     width:90%;
     max-width:420px;
-    box-shadow:0 0 40px rgba(0,0,0,0.5);
+    box-shadow:0 0 40px rgba(0,0,0,0.6);
 }
 
 /* LOGO */
@@ -82,7 +82,8 @@ body{
     border-radius:50%;
     overflow:hidden;
     margin:auto;
-    border:3px solid rgba(255,255,255,0.2);
+    border:3px solid rgba(255,255,255,0.25);
+    box-shadow:0 0 25px rgba(0,0,0,0.7);
 }
 .logo img{
     width:100%;
@@ -93,36 +94,35 @@ body{
 /* TITRE */
 h1{
     margin-top:20px;
-    font-size:38px;
+    font-size:36px;
     font-weight:800;
+    letter-spacing:2px;
 }
 
 /* BOUTONS */
 .btn{
-    margin-top:20px;
-    padding:15px 25px;
+    margin-top:18px;
+    padding:14px 22px;
     background:#5865F2;
     border:none;
     border-radius:12px;
     color:white;
-    font-size:18px;
+    font-size:17px;
     cursor:pointer;
     font-weight:600;
     width:100%;
-    transition:0.3s;
+    transition:0.25s;
 }
 .btn:hover{
     background:#6d78ff;
     transform:translateY(-3px);
+    box-shadow:0 0 16px rgba(88,101,242,0.7);
 }
 
-/* POPUP */
+/* POPUP GENERIQUE */
 .popup{
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    inset:0;
     background:rgba(0,0,0,0.8);
     display:none;
     justify-content:center;
@@ -130,12 +130,12 @@ h1{
     backdrop-filter:blur(10px);
 }
 .popup-content{
-    background:rgba(0,0,0,0.6);
-    padding:30px;
+    background:rgba(0,0,0,0.7);
+    padding:28px;
     border-radius:20px;
     width:90%;
     max-width:450px;
-    border:1px solid rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.18);
     text-align:center;
 }
 
@@ -153,6 +153,7 @@ h1{
     backdrop-filter:blur(5px);
     font-size:20px;
     opacity:0.4;
+    transition:0.25s;
 }
 .secret-btn:hover{
     opacity:1;
@@ -177,21 +178,18 @@ h1{
 <div class="glow"></div>
 
 <!-- STATUS -->
-<div class="status-box" id="status">🟡 Vérification...</div>
+<div class="status-box" id="status">🟡 Vérification du bot...</div>
 
-<!-- CARD -->
+<!-- CARD PRINCIPALE -->
 <div class="card">
-
     <div class="logo">
-        <img src="df3e89bb5ae9a3595a3e99fcba82998f.jpg">
+        <img src="df3e89bb5ae9a3595a3e99fcba82998f.jpg" alt="N1NOX">
     </div>
 
     <h1>N1NOX</h1>
 
     <button class="btn" onclick="openPopup()">ℹ️ Infos du bot</button>
-
     <button class="btn" onclick="window.location.href='https://discord.gg/tonserveur'">💬 Rejoindre le serveur Discord</button>
-
 </div>
 
 <!-- POPUP INFOS -->
@@ -200,7 +198,8 @@ h1{
         <h2>📌 Infos du bot</h2>
         <p>• Nom : N1NOX</p>
         <p>• Type : Musique + Gestion</p>
-        <p>• Style : Premium Discord</p>
+        <p>• Vitesse : ⚡ Ultra rapide</p>
+        <p>• Style : 💎 Premium Discord</p>
         <button class="btn" onclick="closePopup()">Fermer</button>
     </div>
 </div>
@@ -209,24 +208,17 @@ h1{
 <div class="popup" id="secretPopup">
     <div class="popup-content">
         <h2>🎉 Tu viens de trouver un truc secret !</h2>
+        <p>Respect, peu de gens cliquent ici.</p>
         <a href="https://google.com" style="color:#8aa0ff; font-size:18px;">🔗 Lien secret</a>
         <br><br>
         <button class="btn" onclick="closeSecret()">Fermer</button>
     </div>
 </div>
 
-<!-- POPUP REPARATION -->
-<div class="popup" id="repairPopup">
-    <div class="popup-content">
-        <h2>🛠️ Bot hors ligne</h2>
-        <p>Le bot est actuellement en maintenance.</p>
-    </div>
-</div>
-
-<!-- CADENAS -->
+<!-- CADENAS SECRET -->
 <div class="secret-btn" onclick="secretAccess()">🔒</div>
 
-<!-- MODE SOMBRE/CLAIR -->
+<!-- MODE SOMBRE / CLAIR -->
 <div class="mode-btn" onclick="toggleMode()">🌙</div>
 
 <script>
@@ -250,35 +242,29 @@ function toggleMode(){
     document.body.classList.toggle("light");
 }
 
-/* STATUS RÉEL UPTIMEROBOT */
 async function checkStatus(){
     try{
-        let res = await fetch("https://api.uptimerobot.com/v2/getMonitors", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                "api_key": "ur3523333-2f6f2e858f21fa4282e83a6a",
-                "format": "json"
-            })
-        });
+        const res = await fetch("https://api.jsonbin.io/v3/b/6a2d4399da38895dfeb9daef");
+        const data = await res.json();
 
-        let data = await res.json();
-        let status = data.monitors[0].status;
+        const now = Date.now() / 1000;
 
-        if(status === 2){
+        if(now - data.record.last < 40){
             document.getElementById("status").innerHTML = "🟢 Bot en ligne";
         } else {
-            document.getElementById("status").innerHTML = "🔴 Bot hors ligne";
-            document.getElementById("repairPopup").style.display = "flex";
+            window.location.href = "reparation.html";
         }
-
-    }catch(e){
-        document.getElementById("status").innerHTML = "⚠️ Erreur API";
+    }catch{
+        window.location.href = "reparation.html";
     }
 }
 
 checkStatus();
-setInterval(checkStatus, 5000);
+setInterval(checkStatus, 7000);
+
+
+checkStatus();
+setInterval(checkStatus, 7000);
 </script>
 
 </body>
