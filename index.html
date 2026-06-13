@@ -3,179 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>N1NOX Bot Panel</title>
+<title>N1NOX</title>
 
 <style>
-/* Scrollbar */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: #0a0a0a; border-radius: 10px; }
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #ff0055, #7a00ff);
-    border-radius: 10px;
-    box-shadow: 0 0 10px #ff0055;
-}
-
-/* Global */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    padding:40px 20px;
+    margin:0;
+    padding:0;
     background:linear-gradient(135deg,#050505,#101010,#1a1a1a,#0a0a0a);
     background-size:400% 400%;
     animation:bg 15s ease infinite;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     color:white;
+    font-family:Arial, sans-serif;
 }
-@keyframes bg{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-
-.stars{
-    position:fixed;inset:0;
-    background-image:radial-gradient(circle,rgba(255,255,255,.3) 1px,transparent 1px);
-    background-size:50px 50px;
-    opacity:.08;
-    animation:stars 30s linear infinite;
-    pointer-events:none;
+@keyframes bg{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
-@keyframes stars{from{transform:translateY(0);}to{transform:translateY(-300px);}}
 
-/* Card */
 .card{
-    width:430px;max-width:100%;
-    padding:30px;text-align:center;
-    background:rgba(255,255,255,.05);
-    backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:30px;
-    box-shadow:0 20px 60px rgba(0,0,0,.6);
+    background:rgba(255,255,255,0.05);
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.1);
+    width:400px;
 }
 
-/* Logo */
 .logo{
-    width:140px;height:140px;margin:auto;
-    border-radius:50%;overflow:hidden;
-    border:2px solid rgba(255,255,255,.15);
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    overflow:hidden;
+    margin:auto;
+    border:2px solid rgba(255,255,255,0.2);
 }
-.logo img{width:100%;height:100%;object-fit:cover;}
+.logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
 
-h1{margin-top:20px;font-size:38px;font-weight:800;letter-spacing:2px;}
-
-.status{
-    margin-top:20px;padding:18px;border-radius:15px;
-    font-size:24px;font-weight:bold;
-    background:rgba(34,197,94,.12);
-    border:1px solid rgba(34,197,94,.25);
-    color:#22c55e;
+h1{
+    margin-top:20px;
+    font-size:35px;
+    letter-spacing:2px;
 }
 
 .btn{
-    width:100%;margin-top:15px;padding:15px;
-    border:none;border-radius:15px;
-    cursor:pointer;font-size:16px;font-weight:700;
-    transition:.3s;
+    margin-top:20px;
+    padding:15px 25px;
+    background:#5865F2;
+    border:none;
+    border-radius:12px;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
 }
-.discord-btn{background:#5865F2;color:white;}
-.discord-btn:hover{background:#6d78ff;transform:translateY(-4px);}
-.about-btn{background:#1f1f1f;color:white;}
-.about-btn:hover{background:#2c2c2c;transform:translateY(-4px);}
-
-.footer{margin-top:20px;font-size:13px;color:#bdbdbd;}
-
-/* 🔒 Cadenas */
-.lock{
-    position:fixed;top:20px;right:20px;
-    font-size:32px;cursor:pointer;z-index:9999;
+.btn:hover{
+    background:#6d78ff;
+    transform:translateY(-3px);
 }
 
-/* Popup login */
-.modal{
-    display:none;position:fixed;inset:0;
-    background:rgba(0,0,0,.85);
-    justify-content:center;align-items:center;
-    z-index:99999;
+/* 🔒 Cadenas discret */
+.secret-btn{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    padding:8px 12px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:8px;
+    color:white;
+    cursor:pointer;
+    backdrop-filter:blur(5px);
+    font-size:20px;
+    opacity:0.4;
+    transition:0.3s;
 }
-.modal-content{
-    background:#121212;padding:30px;border-radius:20px;
-    width:90%;max-width:350px;text-align:center;
-    border:1px solid rgba(255,255,255,.1);
-}
-.modal input{
-    width:100%;padding:12px;border-radius:10px;
-    border:none;background:#1f1f1f;color:white;margin-bottom:15px;
+.secret-btn:hover{
+    opacity:0.9;
+    background:rgba(255,255,255,0.15);
 }
 </style>
 </head>
 <body>
 
-<div class="stars"></div>
-
-<!-- 🔒 CADENAS -->
-<div class="lock" onclick="openLogin()">🔒</div>
-
-<!-- POPUP LOGIN -->
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <h2>🔐 Connexion</h2>
-        <p>Mot de passe requis</p>
-        <input id="panelPassword" type="password" placeholder="Mot de passe">
-        <button class="btn discord-btn" onclick="checkPassword()">Se connecter</button>
-        <p id="errorMsg" style="color:#ff4444;display:none;margin-top:10px;">❌ Mot de passe incorrect</p>
-    </div>
-</div>
-
 <div class="card">
 
-<div class="logo">
-<img src="df3e89bb5ae9a3595a3e99fcba82998f.jpg">
-</div>
+    <div class="logo">
+        <img src="df3e89bb5ae9a3595a3e99fcba82998f.jpg">
+    </div>
 
-<h1>🤖 N1NOX</h1>
+    <h1>N1NOX</h1>
+    <p style="opacity:0.8;margin-top:10px;">
+        Bot Discord rapide, stylé et optimisé.
+    </p>
 
-<div class="status">🟢 EN LIGNE</div>
-
-<p style="margin-top:15px;opacity:.8;">
-N1NOX Bot est un bot musique + gestion complet, rapide et optimisé.
-</p>
-
-<!-- 🎵 PANEL MUSIQUE -->
-<div id="musicPanel" style="display:none;margin-top:30px;">
-    <h2>🎵 Panel Musique</h2>
-
-    <button class="btn discord-btn" onclick="sendCommand('play')">▶️ Play</button>
-    <button class="btn about-btn" onclick="sendCommand('skip')">⏭ Skip</button>
-    <button class="btn about-btn" onclick="sendCommand('stop')">⏹ Stop</button>
-
-    <button class="btn about-btn" onclick="sendCommand('volumeUp')">🔊 Volume +</button>
-    <button class="btn about-btn" onclick="sendCommand('volumeDown')">🔉 Volume -</button>
-
-    <button class="btn discord-btn" onclick="sendCommand('queue')">📜 File d’attente</button>
-</div>
-
-<div class="footer">Version 1.0 • Développé par MR.X</div>
+    <!-- Bouton vers la page infos -->
+    <button class="btn" onclick="window.location.href='infos.html'">ℹ️ Infos / Status</button>
 
 </div>
+
+<!-- 🔒 Cadenas discret -->
+<div class="secret-btn" onclick="secretAccess()">🔒</div>
 
 <script>
-/* 🔐 MOT DE PASSE */
-const PASSWORD = "nnx";
-
-function openLogin(){ document.getElementById("loginModal").style.display = "flex"; }
-function checkPassword(){
-    const input = document.getElementById("panelPassword").value;
-    if(input === PASSWORD){
-        document.getElementById("loginModal").style.display = "none";
-        document.getElementById("musicPanel").style.display = "block";
+function secretAccess(){
+    let mdp = prompt("Mot de passe :");
+    if(mdp === "nnx"){
+        window.location.href = "reparation.html";
     } else {
-        document.getElementById("errorMsg").style.display = "block";
+        alert("❌ Mot de passe incorrect");
     }
-}
-
-/* 🎵 Connexion au bot (TheBotHost) */
-function sendCommand(cmd){
-    fetch("https://TON-SOUS-DOMAINE.thebothost.com/api/" + cmd)
-        .then(r => r.json())
-        .then(d => alert("Commande envoyée : " + cmd));
 }
 </script>
 

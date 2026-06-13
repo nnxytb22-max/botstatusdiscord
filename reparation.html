@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site en réparation</title>
+
+<style>
+body{
+    background:#0a0a0a;
+    color:white;
+    font-family:Arial;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+/* 🔒 Cadenas discret */
+.secret-btn{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    padding:8px 12px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:8px;
+    color:white;
+    cursor:pointer;
+    backdrop-filter:blur(5px);
+    font-size:20px;
+    opacity:0.4;
+    transition:0.3s;
+}
+.secret-btn:hover{
+    opacity:0.9;
+    background:rgba(255,255,255,0.15);
+}
+
+.box{
+    background:rgba(255,255,255,0.05);
+    padding:40px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.1);
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h1>🛠️ Site en réparation</h1>
+    <p>Revenez plus tard.</p>
+</div>
+
+<!-- Cadenas retour -->
+<div class="secret-btn" onclick="secretBack()">🔓</div>
+
+<script>
+function secretBack(){
+    let mdp = prompt("Mot de passe :");
+    if(mdp === "nnx"){
+        window.location.href = "index.html";
+    } else {
+        alert("❌ Mot de passe incorrect");
+    }
+}
+</script>
+
+</body>
+</html>
