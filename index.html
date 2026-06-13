@@ -3,87 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>N1NOX • Panel</title>
+<title>NNX Bot • Premium Panel</title>
 
 <style>
 :root{
-    --bg:#050509;
-    --card:rgba(255,255,255,0.06);
-    --text:#ffffff;
-}
-.light{
-    --bg:#f2f2f7;
-    --card:rgba(0,0,0,0.06);
-    --text:#000000;
+    --bg:#05050a;
+    --card:rgba(255,255,255,0.08);
+    --text:white;
+    --status-bg:rgba(255,255,255,0.12);
 }
 
-/* BACKGROUND */
 body{
     margin:0;
     padding:0;
     background:var(--bg);
-    font-family:'Segoe UI', system-ui, sans-serif;
+    font-family:'Poppins', sans-serif;
     color:var(--text);
-    height:100vh;
     overflow:hidden;
-    transition:background 0.3s, color 0.3s;
+    transition:0.4s;
 }
 
-/* Glow Discord */
+/* CANVAS PARTICULES */
+#particles{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+}
+
+/* Glow animé néon */
 .glow{
     position:fixed;
-    top:-200px;
-    right:-200px;
-    width:520px;
-    height:520px;
-    background:#5865F2;
+    width:700px;
+    height:700px;
+    background:linear-gradient(45deg,#5865F2,#8a5bff,#00d4ff,#ff00c8);
     filter:blur(220px);
-    opacity:0.35;
+    animation:move 10s infinite alternate;
+    opacity:0.45;
     z-index:-1;
 }
-
-/* STATUS */
-.status-box{
-    position:fixed;
-    top:20px;
-    left:50%;
-    transform:translateX(-50%);
-    background:var(--card);
-    padding:12px 25px;
-    border-radius:15px;
-    border:1px solid rgba(255,255,255,0.15);
-    backdrop-filter:blur(10px);
-    font-size:18px;
-    font-weight:600;
-    box-shadow:0 0 20px rgba(88,101,242,0.4);
+@keyframes move{
+    0%{top:-200px; left:-200px;}
+    100%{top:200px; left:200px;}
 }
 
-/* CARD */
+/* Header image */
+.header-img{
+    position:fixed;
+    top:20px;
+    width:100%;
+    text-align:center;
+    font-size:30px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-shadow:0 0 15px #5865F2;
+    opacity:0;
+    animation:fadeIn 1.5s ease forwards;
+}
+
+/* Carte premium + 3D tilt */
 .card{
     position:absolute;
-    top:50%;
+    top:52%;
     left:50%;
     transform:translate(-50%, -50%);
     background:var(--card);
-    padding:40px;
-    border-radius:25px;
-    backdrop-filter:blur(20px);
+    padding:35px;
+    border-radius:20px;
+    backdrop-filter:blur(25px);
     border:1px solid rgba(255,255,255,0.15);
-    text-align:center;
     width:90%;
-    max-width:420px;
-    box-shadow:0 0 40px rgba(0,0,0,0.6);
+    max-width:350px;
+    text-align:center;
+    opacity:0;
+    animation:cardIn 1.2s ease forwards 1s;
+    transform-style:preserve-3d;
+    transition:transform 0.15s ease;
+}
+@keyframes cardIn{
+    from{opacity:0; transform:translate(-50%, -40%) scale(0.8);}
+    to{opacity:1; transform:translate(-50%, -50%) scale(1);}
 }
 
-/* LOGO */
+/* Logo rond — plus de glow, mais zoom au clic */
 .logo{
-    width:150px;
-    height:150px;
+    width:130px;
+    height:130px;
     border-radius:50%;
     overflow:hidden;
     margin:auto;
-    border:3px solid rgba(255,255,255,0.25);
-    box-shadow:0 0 25px rgba(0,0,0,0.7);
+    border:4px solid rgba(255,255,255,0.25);
+    transition:0.3s ease;
+}
+.logo:active{
+    transform:scale(1.15);
 }
 .logo img{
     width:100%;
@@ -91,180 +103,227 @@ body{
     object-fit:cover;
 }
 
-/* TITRE */
-h1{
-    margin-top:20px;
-    font-size:36px;
-    font-weight:800;
-    letter-spacing:2px;
+/* STATUS BOX */
+.status-box{
+    margin-top:10px;
+    background:var(--status-bg);
+    padding:20px;
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 0 15px #5865F2;
+}
+.status-title{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+.status-text{
+    font-size:18px;
+    opacity:0.9;
 }
 
-/* BOUTONS */
+/* Boutons dégradé animé rainbow — plus lent */
 .btn{
     margin-top:18px;
-    padding:14px 22px;
-    background:#5865F2;
+    padding:12px 20px;
+    background:linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8a00ff);
+    background-size:400%;
+    animation:gradientMove 12s infinite linear;
     border:none;
     border-radius:12px;
     color:white;
     font-size:17px;
     cursor:pointer;
-    font-weight:600;
     width:100%;
+    font-weight:600;
     transition:0.25s;
 }
 .btn:hover{
-    background:#6d78ff;
-    transform:translateY(-3px);
-    box-shadow:0 0 16px rgba(88,101,242,0.7);
+    transform:translateY(-3px) scale(1.03);
+}
+@keyframes gradientMove{
+    0%{background-position:0%;}
+    100%{background-position:400%;}
 }
 
-/* POPUP GENERIQUE */
+/* Texte version */
+.version{
+    margin-top:15px;
+    font-size:13px;
+    opacity:0.6;
+}
+
+/* Popup */
 .popup{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,0.8);
+    background:rgba(0,0,0,0.75);
     display:none;
     justify-content:center;
     align-items:center;
     backdrop-filter:blur(10px);
 }
 .popup-content{
-    background:rgba(0,0,0,0.7);
-    padding:28px;
+    background:var(--card);
+    padding:35px;
     border-radius:20px;
     width:90%;
-    max-width:450px;
-    border:1px solid rgba(255,255,255,0.18);
+    max-width:380px;
+    border:1px solid rgba(255,255,255,0.15);
     text-align:center;
+    animation:pop 0.4s ease;
+}
+@keyframes pop{
+    from{transform:scale(0.7); opacity:0;}
+    to{transform:scale(1); opacity:1;}
 }
 
-/* CADENAS */
+/* Bouton secret invisible */
 .secret-btn{
     position:fixed;
-    bottom:20px;
-    left:20px;
-    padding:8px 12px;
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:8px;
-    color:white;
+    bottom:15px;
+    right:15px;
+    width:40px;
+    height:40px;
+    opacity:0;
     cursor:pointer;
-    backdrop-filter:blur(5px);
-    font-size:20px;
-    opacity:0.4;
-    transition:0.25s;
-}
-.secret-btn:hover{
-    opacity:1;
-}
-
-/* MODE SOMBRE/CLAIR */
-.mode-btn{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    padding:8px 12px;
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:8px;
-    cursor:pointer;
-    font-size:20px;
 }
 </style>
 </head>
 <body>
 
+<!-- Particules -->
+<canvas id="particles"></canvas>
+
 <div class="glow"></div>
 
-<!-- STATUS -->
-<div class="status-box" id="status">🟡 Vérification du bot...</div>
+<!-- Musique -->
+<audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
-<!-- CARD PRINCIPALE -->
+<!-- Header -->
+<div class="header-img">NNX Bot</div>
+
+<!-- Carte -->
 <div class="card">
     <div class="logo">
-        <img src="df3e89bb5ae9a3595a3e99fcba82998f.jpg" alt="N1NOX">
+        <img src="df3e89bb5ae9a3595a3e99fcba82998f.jpg">
     </div>
 
-    <h1>N1NOX</h1>
+    <h2 style="margin-top:10px;">✨ N1NOX ✨</h2>
 
-    <button class="btn" onclick="openPopup()">ℹ️ Infos du bot</button>
-    <button class="btn" onclick="window.location.href='https://discord.gg/tonserveur'">💬 Rejoindre le serveur Discord</button>
+    <!-- STATUS BOX -->
+    <div class="status-box">
+        <div class="status-title">🎧 DJ Status</div>
+        <div class="status-text">🟢 Bot en ligne</div>
+    </div>
+
+    <button class="btn" onclick="openInfo()">ℹ️ Infos du bot</button>
+    <button class="btn" onclick="window.open('https://discord.gg/KTRCSYec2H','_blank')">💬 Rejoindre le serveur</button>
+
+    <div class="version">Version 1.02.1 — Par N1NOX</div>
 </div>
 
-<!-- POPUP INFOS -->
-<div class="popup" id="popup">
+<!-- Popup infos -->
+<div class="popup" id="infoPopup">
     <div class="popup-content">
         <h2>📌 Infos du bot</h2>
-        <p>• Nom : N1NOX</p>
-        <p>• Type : Musique + Gestion</p>
-        <p>• Vitesse : ⚡ Ultra rapide</p>
-        <p>• Style : 💎 Premium Discord</p>
-        <button class="btn" onclick="closePopup()">Fermer</button>
+        <p>🤖 Nom : N1NOX</p>
+        <p>🎵 Type : Musique + Gestion</p>
+        <p>💎 Style : Premium Discord</p>
+        <button class="btn" onclick="closeInfo()">Fermer</button>
     </div>
 </div>
 
-<!-- POPUP SECRET -->
-<div class="popup" id="secretPopup">
+<!-- Popup connexion -->
+<div class="popup" id="loginPopup">
     <div class="popup-content">
-        <h2>🎉 Tu viens de trouver un truc secret !</h2>
-        <p>Respect, peu de gens cliquent ici.</p>
-        <a href="https://google.com" style="color:#8aa0ff; font-size:18px;">🔗 Lien secret</a>
-        <br><br>
-        <button class="btn" onclick="closeSecret()">Fermer</button>
+        <h2>🔐 Se connecter</h2>
+        <p>Entre ton mot de passe :</p>
+        <input id="mdpInput" type="password" placeholder="Mot de passe" style="padding:10px; width:80%; border-radius:10px; border:none; margin-top:15px;">
+        <button class="btn" onclick="checkMdp()">Valider</button>
+        <button class="btn" style="background:#333; margin-top:10px;" onclick="closeLogin()">Annuler</button>
     </div>
 </div>
 
-<!-- CADENAS SECRET -->
-<div class="secret-btn" onclick="secretAccess()">🔒</div>
+<!-- Popup lien secret -->
+<div class="popup" id="linkPopup">
+    <div class="popup-content">
+        <h2>🎉 Accès accordé</h2>
+        <p><a href="https://discord.gg/G7B48kfHrV" style="color:#6d9bff;">👉 Clique ici pour accéder au lien spécial</a></p>
+        <button class="btn" onclick="closeLink()">Fermer</button>
+    </div>
+</div>
 
-<!-- MODE SOMBRE / CLAIR -->
-<div class="mode-btn" onclick="toggleMode()">🌙</div>
+<!-- Bouton secret invisible -->
+<div class="secret-btn" onclick="openLogin()"></div>
 
 <script>
-/* POPUP INFOS */
-function openPopup(){ document.getElementById("popup").style.display="flex"; }
-function closePopup(){ document.getElementById("popup").style.display="none"; }
+/* POPUPS */
+function openInfo(){ document.getElementById("infoPopup").style.display="flex"; }
+function closeInfo(){ document.getElementById("infoPopup").style.display="none"; }
 
-/* POPUP SECRET */
-function secretAccess(){
-    let mdp = prompt("Mot de passe :");
+function openLogin(){ document.getElementById("loginPopup").style.display="flex"; }
+function closeLogin(){ document.getElementById("loginPopup").style.display="none"; }
+
+function checkMdp(){
+    let mdp = document.getElementById("mdpInput").value;
     if(mdp === "nnx"){
-        document.getElementById("secretPopup").style.display="flex";
+        closeLogin();
+        document.getElementById("linkPopup").style.display="flex";
     } else {
-        alert("❌ Mot de passe incorrect");
+        alert("❌ Mauvais mot de passe");
     }
 }
-function closeSecret(){ document.getElementById("secretPopup").style.display="none"; }
+function closeLink(){ document.getElementById("linkPopup").style.display="none"; }
 
-/* MODE SOMBRE/CLAIR */
-function toggleMode(){
-    document.body.classList.toggle("light");
+/* 3D TILT */
+const card = document.querySelector(".card");
+document.addEventListener("mousemove", (e) => {
+    let x = (window.innerWidth / 2 - e.clientX) / 25;
+    let y = (window.innerHeight / 2 - e.clientY) / 25;
+    card.style.transform = `translate(-50%, -50%) rotateY(${x}deg) rotateX(${y}deg)`;
+});
+document.addEventListener("mouseleave", () => {
+    card.style.transform = "translate(-50%, -50%) rotateY(0deg) rotateX(0deg)";
+});
+
+/* PARTICULES ANIMÉES */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let particles = [];
+
+function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+window.onresize = resize;
+
+for(let i=0;i<120;i++){
+    particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        size:Math.random()*2+1,
+        speedX:(Math.random()-0.5)*0.3,
+        speedY:(Math.random()-0.5)*0.3
+    });
 }
 
-async function checkStatus(){
-    try{
-        const res = await fetch("https://api.jsonbin.io/v3/b/6a2d4399da38895dfeb9daef");
-        const data = await res.json();
-
-        const now = Date.now() / 1000;
-
-        if(now - data.record.last < 40){
-            document.getElementById("status").innerHTML = "🟢 Bot en ligne";
-        } else {
-            window.location.href = "reparation.html";
-        }
-    }catch{
-        window.location.href = "reparation.html";
-    }
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+        p.x+=p.speedX;
+        p.y+=p.speedY;
+        if(p.x<0||p.x>canvas.width) p.speedX*=-1;
+        if(p.y<0||p.y>canvas.height) p.speedY*=-1;
+        ctx.fillStyle="white";
+        ctx.fillRect(p.x,p.y,p.size,p.size);
+    });
+    requestAnimationFrame(animate);
 }
-
-checkStatus();
-setInterval(checkStatus, 7000);
-
-
-checkStatus();
-setInterval(checkStatus, 7000);
+animate();
 </script>
 
 </body>
